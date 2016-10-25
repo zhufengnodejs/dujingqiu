@@ -1,0 +1,149 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+
+    color: #555;
+    font-size: 14px;
+    font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+}
+
+a, a:hover, a:active {
+    color: #555;
+    text-decoration: none;
+}
+
+ul, li {
+    list-style: none;
+}
+
+/*INDEX*/
+.box {
+    margin: 10px auto;
+    padding: 10px;
+    width: 1000px;
+    border: 2px solid green;
+    text-align: center;
+}
+
+.box .link {
+    display: block;
+    line-height: 35px;
+    color: green;
+}
+
+.box .link:hover {
+    text-decoration: underline;
+}
+
+.box h2 {
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+
+    color: #FFF;
+    font-size: 14px;
+    background: green;
+}
+
+.box h2 span, .box ul li span {
+    float: left;
+    width: 200px;
+}
+
+.box h2 span.fir, .box ul li span.fir {
+    width: 100px;
+}
+
+.box ul li {
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+
+.box ul li span.control a {
+    display: inline-block;
+    margin: 0 5px;
+    color: green;
+}
+
+/*使用CSS3中新增加的选择器实现隔行变色*/
+.active{
+    background: #EEE;
+}
+
+.box ul li:hover {
+    background: #fcf0b5;
+}
+
+/*----ADD----*/
+input {
+    outline: none;
+}
+
+.box2 {
+    margin: 10px auto;
+    padding: 10px;
+    width: 500px;
+    border: 2px solid green;
+}
+
+.box2 div {
+    height: 50px;
+    line-height: 50px;
+}
+
+.box2 div span, .box2 div input {
+    display: inline-block;
+}
+
+.box2 div span {
+    width: 50px;
+    text-align: center;
+}
+
+.box2 div input {
+    padding: 0 5px;
+    width: 300px;
+    height: 25px;
+    border: 1px solid #CCC;
+}
+
+#userName, #userAge {
+    width: 150px;
+}
+
+#submit {
+    display: block;
+    margin: 10px auto;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+
+    color: #FFF;
+    background: green;
+    border: 1px solid #CCC;
+}
+.pagination{
+    display: inline-block;
+    text-align: center;
+}
+.pagination li{
+    display: inline-block;
+    width:20px;
+    height: 10px;
+    border: 1px solid black;
+    margin: 0 2px;
+}
+.search{
+    margin-bottom: 5px;
+}
+
+
+

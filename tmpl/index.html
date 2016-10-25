@@ -1,0 +1,36 @@
+
+<div class="box">
+    <a href="#/student/add" class="link">NEW CUSTOMER</a>
+    <div class="search">
+       关键字:<input ng-change="goto(1)" type="text" ng-model="keyword">
+    </div>
+    <h2>
+        <span class="fir" ng-click="sort('id')">ID</span>
+        <span ng-click="sort('name')">NAME</span>
+        <span class="fir" ng-click="sort('age')">AGE</span>
+        <span>PHONE</span>
+        <span>ADDRESS</span>
+        <span>CONTROL</span>
+    </h2>
+
+    <ul id="conList">
+        <li ng-repeat="student in students |orderBy:part:flag |filter:query track by $index ">
+            <span class="fir">{{student.id}}</span>
+            <span>{{student.name}}</span>
+            <span class="fir">{{student.age}}</span>
+            <span>{{student.phone}}</span>
+            <span>{{student.address}}</span>
+            <span class="control">
+                <a href="#/student/update/{{student.id}}">修改</a>
+                <a href="#" ng-click="remove(student.id)">删除</a>
+            </span>
+        </li>
+    </ul>
+    <ul class="pagination" >
+        <li ng-if="pageNum>1"><a href="javascript:;" ng-click="goto(pageNum-1)">&laquo;</a></li>
+        <li ng-class="{active:nav == pageNum}" ng-repeat="nav in navs "><a href="javascript:;" ng-click="goto(nav)">{{nav}}</a></li>
+        <li ng-if="pageNum<totalPage"><a href="javascript:;"  ng-click="goto(pageNum+1)">&raquo;</a></li>
+    </ul>
+</div>
+
+

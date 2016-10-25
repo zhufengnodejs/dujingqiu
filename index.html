@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>CRM</title>
+    <link rel="stylesheet" href="./css/index.css">
+    <!--<link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">-->
+</head>
+<body>
+
+<div ng-view></div>
+<script src="node_modules/angular/angular.js"></script>
+<script src="node_modules/angular-resource/angular-resource.js"></script>
+<script src="node_modules/angular-route/angular-route.js"></script>
+<script>
+    var app = angular.module('appModule', ['ngResource', 'ngRoute']);
+    app.factory('student', function ($resource) {
+        return $resource('/students/:id', null, {
+            update: {
+                method: 'PUT'
+            }
+        })
+    });
+    app.config(function ($routeProvider) {
+        $routeProvider.when('/', {
+            templateUrl: 'tmpl/index.html',
+            controller: 'indexCtrl'
+        }).when('/student/add', {
+            templateUrl: 'tmpl/add.html',
+            controller: 'addCtrl'
+        }).when('/student/update/:id', {
+            templateUrl: 'tmpl/update.html',
+            controller: 'updateCtrl'
+        }).otherwise('/')
+    });
+    app.controller('indexCtrl', function ($scope, student, $routeParams, $location) {
+        $scope.orderBy = 'id';//排序字段
+        $scope.asc = true;//是否升序排列
+        $scope.keyword = '';//关键字
+        $scope.sort = function(orderBy){
+            $scope.orderBy = orderBy;
+            $scope.asc = $scope.asc=='asc'?'desc':'asc';
+            $scope.goto(1);
+        }
+        $scope.goto=function(pageNum){
+            student.query({pageNum: pageNum,orderBy:$scope.orderBy,asc:$scope.asc,keyword:$scope.keyword},function(result){
+                $scope.students=result[0].students;
+                $scope.navs=[];
+                for(var i=1;i<=result[0].totalPage;i++){
+                    $scope.navs.push(i);
+                }
+                $scope.totalPage = result[0].totalPage;
+                $scope.pageNum = result[0].pageNum;
+            })
+        };
+        $scope.goto(1);
+        $scope.remove = function (id) {
+            student.delete({id: id},function () {
+                $location.path('/')
+            });
+            $location.path('/')
+        }
+    });
+    app.controller('addCtrl', function ($scope, student, $location) {
+        $scope.add = function () {
+            student.save($scope.student).$promise.then(function () {
+                $location.path('/')
+            })
+        }
+    });
+    app.controller('updateCtrl', function ($scope, student, $location, $routeParams) {
+        var id = $routeParams.id;
+        $scope.student = student.get({id: id});
+        $scope.update = function () {
+            student.update({id: id}, $scope.student).$promise.then(function () {
+                $location.path('/')
+            })
+        };
+    })
+</script>
+</body>
+</html>

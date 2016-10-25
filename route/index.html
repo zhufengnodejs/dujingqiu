@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="customerMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div ng-view>
+xxxx
+</div>
+</body>
+<script src="../node_modules/angular/angular.js"></script>
+<script src="../node_modules/angular-route/angular-route.js"></script>
+<script src="../node_modules/angular-resource/angular-resource.js"></script>
+<script>
+    // #/    #/customer
+    //ngRoute会监控URL的变化 ，当URL发生变化 之后会截取到新的路径。
+    //会跟路由配置进行匹配，如果匹配上，会得到一个模板的地址和控制器的名称
+    //把模板和控制器进行混合渲染得到一个HTML片断
+    //寻找页面中拥有ng-view的指令的元素，插入这个元素的内部
+    angular.module('customerMod',['ngRoute','ngResource'])
+            .config(function($routeProvider){
+                $routeProvider.when('/',{
+                    templateUrl:'tmpl/index.html',
+                    controller:function($scope){
+                        $scope.name = '首页';
+                    }
+                }).when('/list',{
+                    templateUrl:'tmpl/list.html',
+                    controller:'listCtrl'
+                });
+            });
+    angular.module('customerMod').factory('student',function($resource){
+        return $resource('/students/:id',null,{
+            update:{
+                method:'PUT'
+            }
+        })
+    });
+    angular.module('customerMod').controller('listCtrl',function($scope,student){
+        $scope.name = '列表';
+        $scope.students = student.query({keyword:'a',orderBy:'name',pageSize:5,pageNumber:2});
+
+    });
+</script>
+</html>
